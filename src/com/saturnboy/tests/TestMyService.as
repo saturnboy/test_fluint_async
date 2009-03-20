@@ -24,7 +24,10 @@ package com.saturnboy.tests {
 		}
 
 		public function testGetSomething():void {
+			//call service with dummy callback
 			var token:AsyncToken = _service.getSomething(dummyResult, handleFault);
+			
+			//attach test callback via Fluint's async callback helper
 			token.addResponder(asyncResponder(new TestResponder(handleGetSomething, handleFault), 1000, token));
 		}
 		private function handleGetSomething(data:Object, passThroughData:Object):void {

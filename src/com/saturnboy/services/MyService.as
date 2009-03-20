@@ -10,10 +10,10 @@ package com.saturnboy.services {
 		}
 
 		public function getSomething(result:Function, fault:Function):AsyncToken {
-			//call the gxe service
+			//call the service
 			var token:AsyncToken = _backend.getSomething();
 
-			//wireup handlers for result & fault, and send the token as passThrough data
+			//wireup result & fault callbacks, and send the token as passThrough data
 			token.addResponder(new AsyncResponder(result, fault, token));
 
 			return token;

@@ -12,13 +12,16 @@ package com.saturnboy.services {
 
 		public function getSomething():AsyncToken {
 			var token:AsyncToken = new AsyncToken(null);
+			var result:Object = { name:'something', list:[1,2,3] };
 
+			//simulate backend delay via timer
 			var t:Timer = new Timer(500, 1);
-			
+
+			//send result to all of the token's responders
 			t.addEventListener(TimerEvent.TIMER_COMPLETE,
 				function(e:TimerEvent):void {
 					for each(var responder:IResponder in token.responders) {
-						responder.result(new ResultEvent(ResultEvent.RESULT, false, true, {name:'something', list:[1,2,3]}));
+						responder.result(new ResultEvent(ResultEvent.RESULT, false, true, result));
 					}
 					t = null;
 					token = null;
