@@ -1,7 +1,8 @@
 h1. Test Fluint Async 
 
-Testing Fluint's async testing support.
+Testing Fluint's async testing support.  Fluint has advanced async testing features...so let's check 'em out!
 
-h3. Requirement
+h3. Links
 
-"http://code.google.com/p/fluint/":http://code.google.com/p/fluint/
+* Fluint: "http://code.google.com/p/fluint/":http://code.google.com/p/fluint/
+* FlexUnit: "http://opensource.adobe.com/wiki/display/flexunit/Flexunit":http://opensource.adobe.com/wiki/display/flexunit/Flexunit
