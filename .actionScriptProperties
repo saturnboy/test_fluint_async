@@ -9,7 +9,7 @@
 <sourceAttachmentPath/>
 </compiler>
 <applications>
-<application path="test_fluint_async.mxml"/>
+<application path="TestFluintAsync.mxml"/>
 <application path="TestRunner.mxml"/>
 </applications>
 <modules/>

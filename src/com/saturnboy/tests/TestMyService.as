@@ -1,8 +1,9 @@
 package com.saturnboy.tests {
 	import com.saturnboy.services.MyService;
-	
+
 	import mx.rpc.AsyncToken;
-	
+	import mx.rpc.IResponder;
+
 	import net.digitalprimates.fluint.async.TestResponder;
 	import net.digitalprimates.fluint.tests.TestCase;
 
@@ -12,12 +13,12 @@ package com.saturnboy.tests {
 		public function TestMyService() {
 			super();
 		}
-		
+
 		override protected function setUp():void {
 			super.setUp();
 			_service = new MyService();
 		}
-		
+
 		override protected function tearDown():void {
 			super.tearDown();
 			_service = null;
@@ -25,23 +26,28 @@ package com.saturnboy.tests {
 
 		public function testGetSomething():void {
 			//call service with dummy callback
-			var token:AsyncToken = _service.getSomething(dummyResult, handleFault);
-			
-			//attach test callback via Fluint's async callback helper
-			token.addResponder(asyncResponder(new TestResponder(handleGetSomething, handleFault), 1000, token));
-		}
-		private function handleGetSomething(data:Object, passThroughData:Object):void {
-			var result:Object = data.result;
-			assertEquals('something', result.name);
-			assertEquals(3, result.list.length);
-			assertEquals([1,2,3].join(','), result.list.join(','));
+			var token:AsyncToken = _service.getSomething(dummyResult, dummyFault);
+
+			//create async test responder
+			var responder:IResponder = asyncResponder(
+					new TestResponder(testHandler, faultHandler), 1000, token);
+
+			//wire test responder as 2nd callback
+			token.addResponder(responder);
 		}
 
-		private function dummyResult(data:Object, passThroughData:Object):void {
-			trace('Dummy');
+		private function testHandler(result:Object, passThroughData:Object):void {
+			assertEquals('something', result.result.name);
 		}
-		private function handleFault(error:Object, passThroughData:Object):void {
+		private function faultHandler(error:Object, passThroughData:Object):void {
 			fail('Fault');
+		}
+
+		private function dummyResult(result:Object, token:Object):void {
+			trace('dummy result');
+		}
+		private function dummyFault(result:Object, token:Object):void {
+			trace('dummy fault');
 		}
 	}
 }

@@ -1,4 +1,27 @@
 <?xml version="1.0" encoding="utf-8"?>
-<mx:Application xmlns:mx="http://www.adobe.com/2006/mxml" layout="absolute">
-	
+<mx:Application
+		xmlns:mx="http://www.adobe.com/2006/mxml"
+		creationComplete="complete()">
+
+	<mx:Script>
+	<![CDATA[
+		import com.saturnboy.services.MyService;
+		private var service:MyService;
+
+		private function complete():void {
+			service = new MyService();
+			service.getSomething(resultHandler, faultHandler);
+		}
+
+		private function resultHandler(result:Object, token:Object=null):void {
+			lbl.text = result.result.name;
+		}
+
+		public function faultHandler(error:Object, token:Object=null):void {
+			lbl.text = 'fault';
+		}
+	]]>
+	</mx:Script>
+
+	<mx:Label id="lbl" text="init text" />
 </mx:Application>
